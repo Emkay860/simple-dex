@@ -1,0 +1,24 @@
+{
+	"name": "simple-dex",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"test": "npx hardhat test"
+	},
+	"keywords": [
+		"dex",
+		"simple-multitokn",
+		"dex"
+	],
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"@nomicfoundation/hardhat-toolbox": "^1.0.2",
+		"hardhat": "^2.10.1"
+	},
+	"dependencies": {
+		"@openzeppelin/contracts": "^4.7.2",
+		"dotenv": "^16.0.1"
+	}
+}
