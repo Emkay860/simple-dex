@@ -5,6 +5,10 @@ pragma solidity ^0.8.4;
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract Dex {
+
+    /// @notice - To make the contract as simple as possible, we assume a 1 : 1 
+    /// token conversion i.e 1 amount of token A swaps for 1 amount of token B
+
     address[] public tokens;
 
     event AddTokenToPool(address token, uint256 amount);
@@ -20,7 +24,10 @@ contract Dex {
         _;
     }
 
-    // call this function to add amount of token to the contract liquidity
+    /// @dev - Call this function to add amount of token to the contract liquidity
+    /// @notice - we assume our dex contract is the liquidity pool
+    /// @param token - address of token to add as liquiidity
+    /// @param amount - number of tokens to add as liquidity
     function addTokenToPool(address token, uint256 amount) public nonZeroValue(amount){
         IERC20(token).transferFrom(msg.sender, address(this), amount);
         tokens.push(token);
@@ -28,6 +35,9 @@ contract Dex {
         emit AddTokenToPool(token, amount);
     }
 
+    /// @dev - Allow user to exchange a speficied token for ETH
+    /// @param amount - an integer that represents the number of tokens to swap
+    /// @param token - address of token to swap from
     function swapToETH(uint256 amount, address token) public nonZeroValue(amount) {
         IERC20 _token = IERC20(token);
         uint256 allowance = _token.allowance(msg.sender, address(this));
@@ -44,7 +54,8 @@ contract Dex {
         emit SwapToETH(token, amount);
     }
 
-    // Allows user to swap ETH to any available token
+    /// @dev - Allows user to swap ETH for a specified token
+    /// @param token - address of token to swap to
     function swapETH(address token) public payable nonZeroValue(msg.value) {
         IERC20 _token = IERC20(token);
         uint256 amount = msg.value;
